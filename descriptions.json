@@ -1,0 +1,16 @@
+{
+    "models": {
+      "assets/x3d/spritecan2": {
+        "name": "Sprite Can",
+        "description": "This is a 3D model of a Sprite can, part of the Coca-Cola brand."
+      },
+      "assets/x3d/appletisertest": {
+        "name": "Appletiser Can",
+        "description": "This is a 3D model of an Appletiser can."
+      },
+      "assets/x3d/costacanfinal": {
+        "name": "Costa Coffee Can",
+        "description": "This is a 3D model of a Costa Coffee Latte can."
+      }
+    }
+  }

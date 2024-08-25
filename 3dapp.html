@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" type="text/css" href="https://www.x3dom.org/download/x3dom.css">
+    <title>My 3D App</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-sm navbar_coca_cola">
+      <div class="container">
+        <div class="logo">
+          <a class="navbar-brand" href="#">
+            <h1>My 3D App</h1>
+            <h3>Coca-Cola Brand</h3>
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container main_contents">
+      <div id="main_3d_image">
+        <x3d id="x3d_" width='500px' height='400px'> 
+          <Scene DEF="mainScene" class="default-view">
+            <Transform DEF='Model-Wrapper' rotation='0 0 0 0'> 
+            <Inline id="model" url="assets/x3d/spritecan2.x3d" ></Inline>
+            
+          </Transform>
+          </Scene>
+        </x3d>           
+      </div>
+      <div id="main_text" class="col-xs-12 col-sm-4">
+        <h2 id="model-name">Your Model Name</h2>
+        <p id="model-description">Description of your 3D model and its significance within the Coca-Cola brand or other context.</p>
+      </div>
+    </div>
+
+    <!-- Buttons for interaction -->
+    <div class="container mt-3">
+      <button class="btn btn-primary" onclick="switchModel('assets/x3d/spritecan2.x3d')">Sprite Can</button>
+      <button class="btn btn-primary" onclick="switchModel('assets/x3d/appletisertest.x3d')">Appletiser Can</button>
+      <button class="btn btn-primary" onclick="switchModel('assets/x3d/costacanfinal.x3d')">Costa Can</button>
+      <button class="btn btn-secondary" onclick="wireFrame()">Toggle Wireframe</button>
+      <button class="btn btn-secondary" onclick="rotateObject()">Rotate 360°</button>
+    </div>
+
+    <nav class="navbar navbar-expand-sm footer">
+      <div class="container">   
+        <div class="navbar-text float-left copyright">
+          <p>&copy; 2024 My 3D App</p>
+        </div>
+        <div class="navbar-text social">
+          <a href="#"><i class="fab fa-github-square fa-2x fa-pull-right"></i></a>
+        </div>
+      </div>
+    </nav>
+
+    <script src="js/jquery-3.5.1.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="https://www.x3dom.org/download/x3dom.js"></script>
+
+    <script>
+      // Function to switch between models
+      function switchModel(modelURL) {
+        document.getElementById('model').setAttribute('url', modelURL);
+
+        // Extract the model name (without extension) from the URL
+        const modelName = modelURL.split('.')[0];
+
+        // Fetch the model description from the JSON file
+        $.getJSON('descriptions.json', function(data) {
+          const modelData = data.models[modelName];
+          console.log(modelName);
+          if (modelData) {
+            $('#model-name').text(modelData.name);
+            $('#model-description').text(modelData.description);
+          } else {
+            console.error("Model description not found for", modelName);
+          }
+        });
+      }
+
+      // Function to toggle wireframe mode
+      function toggleWireframe() {
+        const sceneElement = document.querySelector('Scene[DEF="mainScene"]');
+
+        if (sceneElement) {
+          // Toggle the wireframe class on or off
+          if (sceneElement.classList.contains('wireframe-view')) {
+            sceneElement.classList.remove('wireframe-view');
+            sceneElement.classList.add('default-view');
+            console.log("ho");
+          } else {
+            sceneElement.classList.remove('default-view');
+            sceneElement.classList.add('wireframe-view');
+            console.log("hi");
+          }
+
+        } else {
+          console.error("Scene element not found.");
+        }
+  }
+  
+  function wireFrame()
+  {
+    var e = document.getElementById('wire');
+    e.runtime.togglePoints(true);
+    e.runtime.togglePoints(true);
+  }
+  //Function to rotate the model 360 degrees
+  function rotateObject() {
+    const transformNode = document.querySelector('Transform[DEF="Model-Wrapper"]');
+
+    if (transformNode) {
+      let angle = 0;
+      const fullRotation = 2 * Math.PI;
+
+      function animate() {
+        angle += 0.03; 
+        
+        if (angle < fullRotation) {
+          transformNode.setAttribute('rotation', `0 1 0 ${angle}`);
+          requestAnimationFrame(animate);
+        } else {
+          //stops exactly at 360 degrees
+          transformNode.setAttribute('rotation', `0 1 0 ${fullRotation}`);
+        }
+      }
+
+      animate(); // Start the animation loop
+    } else {
+      console.error("Transform node not found.");
+    }
+  }
+    </script>
+    
+  </body>
+</html>
