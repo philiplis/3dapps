@@ -6,11 +6,11 @@
       },
       "assets/x3d/appletisertest": {
         "name": "Appletiser Can",
-        "description": "This is a 3D model of an Appletiser can."
+        "description": "This is a 3D model of an Appletiser can, part of the Coca-Cola brand."
       },
       "assets/x3d/costacanfinal": {
         "name": "Costa Coffee Can",
-        "description": "This is a 3D model of a Costa Coffee Latte can."
+        "description": "This is a 3D model of a Costa Coffee Latte can, part of the Coca-Cola brand."
       }
     }
   }
